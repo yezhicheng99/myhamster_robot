@@ -2,8 +2,8 @@
 
 <robot name="hamster" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find hamster_vehicle_description)/urdf/front_wheel.urdf.xacro" />
-  <xacro:include filename="$(find hamster_vehicle_description)/urdf/rear_wheel.urdf.xacro" />
+  <xacro:include filename="$(find myhamster_simulation)/urdf/front_wheel.urdf.xacro" />
+  <xacro:include filename="$(find myhamster_simulation)/urdf/rear_wheel.urdf.xacro" />
 
   <xacro:macro name="solid_cuboid_inertia" params="w h d m"> 
   <inertia  ixx="${m*(h*h+d*d)/12}" ixy = "0" ixz = "0"
@@ -25,7 +25,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://hamster_vehicle_description/meshes/shell.dae" />
+        <mesh filename="package://myhamster_simulation/meshes/shell.dae" />
       </geometry>
     </visual>
     <collision>
@@ -91,7 +91,7 @@
   <link name="lidar_link">
     <visual>
       <geometry>
-        <mesh filename="package://hamster_vehicle_description/meshes/A2_lidar.dae" />
+        <mesh filename="package://myhamster_simulation/meshes/A2_lidar.dae" />
       </geometry>
     </visual>
   </link>
@@ -105,10 +105,10 @@
     <visual>
       <geometry>
         <xacro:if value="${version == 'V7'}">
-        <mesh filename="package://hamster_vehicle_description/meshes/d415.stl" />
+        <mesh filename="package://myhamster_simulation/meshes/d415.stl" />
         </xacro:if>
         <xacro:if value="${version == 'V6'}">
-        <mesh filename="package://hamster_vehicle_description/meshes/camera.stl" />
+        <mesh filename="package://myhamster_simulation/meshes/camera.stl" />
         </xacro:if>
       </geometry>
       <material name="red"/>
@@ -126,7 +126,7 @@
 
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>$(arg agent)</robotNamespace>
+      <robotNamespace></robotNamespace>
       <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
       <legacyModeNS>true</legacyModeNS>
     </plugin>
@@ -134,7 +134,7 @@
 
   <gazebo>
     <plugin name="gazebo_ackermann_drive" filename="libgazebo_ackermann_drive.so">
-      <robotNamespace>$(arg agent)</robotNamespace>
+      <robotNamespace></robotNamespace>
       <robotBaseLink>base_link</robotBaseLink> 
       <wheelRadius>0.029</wheelRadius>
       <wheelSeparation>0.17</wheelSeparation>
@@ -172,13 +172,13 @@
         <gaussianNoise>0.0</gaussianNoise>
         <xyzOffset>0 0 0</xyzOffset>
         <rpyOffset>0 0 0</rpyOffset>
-        <frameName>$(arg agent)/imu_link</frameName>
+        <frameName>imu_link</frameName>
       </plugin>
     </sensor>
   </gazebo>
 
   <gazebo reference="lidar_link">
-    <sensor type="gpu_ray" name="head_hokuyo_sensor">
+    <sensor type="ray" name="head_hokuyo_sensor">
       <pose>0 0 0 0 0 0</pose>
       <visualize>false</visualize>
       <update_rate>10</update_rate>
@@ -202,7 +202,7 @@
           <stddev>0.01</stddev>
         </noise>
       </ray>
-      <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_gpu_laser.so">
+      <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
         <topicName>scan</topicName>
         <frameName>lidar_link</frameName>
       </plugin>
@@ -284,7 +284,7 @@
           <cameraName></cameraName>
           <imageTopicName>image_raw</imageTopicName>
           <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-          <frameName>$(arg agent)/camera_link</frameName>
+          <frameName>camera_link</frameName>
           <hackBaseline>0.07</hackBaseline>
           <distortionK1>0.0</distortionK1>
           <distortionK2>0.0</distortionK2>
