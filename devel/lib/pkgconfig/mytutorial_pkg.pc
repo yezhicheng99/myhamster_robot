@@ -1,0 +1,8 @@
+prefix=/home/zhichengye/ros_workspace/devel
+
+Name: mytutorial_pkg
+Description: Description of mytutorial_pkg
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: ackermann_msgs gazebo_ros random_numbers roscpp rospy

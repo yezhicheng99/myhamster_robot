@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- robot name -->
+  <arg name="agent" default="hamster"/>
+  <arg name="cmd_timeout" default="0.5"/>
+  <arg name="x_pos" default="0.0"/>
+  <arg name="y_pos" default="0.0"/>
+  <arg name="z_pos" default="0.1"/>
+  <arg name="roll" default="0.0"/>
+  <arg name="pitch" default="0.0"/>
+  <arg name="yaw" default="0.0"/>
+  <arg name="robot_version" default="V7"/>
+
+  <!-- load gazebo simulation environment -->
+  <env name="GAZEBO_MODEL_PATH" value="$(find myhamster_simulation)/models"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find myhamster_simulation)/worlds/just_office.world"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="paused" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+  <!-- spawn robot -->
+  <group ns="$(arg agent)">
+    <param name="robot_description" command="$(find xacro)/xacro $(find myhamster_simulation)/urdf/hamster.urdf.xacro
+      agent:=$(arg agent) robot_version:=$(arg robot_version)"/>
+  
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+      <param name="publish_frequency" value="10" />
+      <param name="tf_prefix" value="$(arg agent)" />
+    </node>
+    
+    <node name="joint_state_publisher_simulation" pkg="joint_state_publisher" type="joint_state_publisher"/>
+
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_model" 
+      args="-urdf 
+            -param /$(arg agent)/robot_description 
+            -model $(arg agent) 
+            -x $(arg x_pos)
+            -y $(arg y_pos) 
+            -z $(arg z_pos) 
+            -R $(arg roll) 
+            -P $(arg pitch) 
+            -Y $(arg yaw)"/>
+  </group>
+
+</launch>

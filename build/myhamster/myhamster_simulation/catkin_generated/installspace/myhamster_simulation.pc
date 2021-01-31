@@ -1,0 +1,8 @@
+prefix=/home/zhichengye/ros_workspace/install
+
+Name: myhamster_simulation
+Description: Description of myhamster_simulation
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
