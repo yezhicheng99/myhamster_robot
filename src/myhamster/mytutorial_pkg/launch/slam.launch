@@ -1,0 +1,8 @@
+<launch>
+    <include file="$(find myhamster_simulation)/launch/hamster_v7.launch">
+        <arg name="rvizpath" value="$(find myhamster_simulation)/rviz/rviz_slam.rviz"/>
+    </include>
+
+    <include file="$(find mytutorial_pkg)/launch/gmapping.launch"/>
+
+</launch>
