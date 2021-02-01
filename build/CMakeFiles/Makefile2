@@ -491,6 +491,24 @@ hamster_simulation/hamster_vehicle_gazebo/preinstall:
 .PHONY : hamster_simulation/hamster_vehicle_gazebo/preinstall
 
 #=============================================================================
+# Directory level rules for directory teb_local_planner_tutorials
+
+# Convenience name for "all" pass in the directory.
+teb_local_planner_tutorials/all:
+
+.PHONY : teb_local_planner_tutorials/all
+
+# Convenience name for "clean" pass in the directory.
+teb_local_planner_tutorials/clean:
+
+.PHONY : teb_local_planner_tutorials/clean
+
+# Convenience name for "preinstall" pass in the directory.
+teb_local_planner_tutorials/preinstall:
+
+.PHONY : teb_local_planner_tutorials/preinstall
+
+#=============================================================================
 # Directory level rules for directory hamster_simulation/hamster_teleop
 
 # Convenience name for "all" pass in the directory.
