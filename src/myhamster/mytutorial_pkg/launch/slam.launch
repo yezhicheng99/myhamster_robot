@@ -1,6 +1,8 @@
 <launch>
     <include file="$(find myhamster_simulation)/launch/hamster_v7.launch">
+        <arg name="use_rviz" value="true"/>
         <arg name="rvizpath" value="$(find myhamster_simulation)/rviz/rviz_slam.rviz"/>
+        <arg name="gazebo_world" value="$(find myhamster_simulation)/worlds/racecar_walker.world"/>
     </include>
 
     <include file="$(find mytutorial_pkg)/launch/gmapping.launch"/>
