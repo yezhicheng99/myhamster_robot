@@ -46,8 +46,8 @@
           -P $(arg pitch) 
           -Y $(arg yaw)" />
 
-  <arg name="use_rviz" default="true"/>
-  <arg name="rvizpath" default="$(find myhamster_simulation)/rviz/rviz_basic.rviz"/>
+  <arg name="use_rviz" default="false"/>
+  <arg if="$(arg use_rviz)" name="rvizpath" default="$(find myhamster_simulation)/rviz/rviz_basic.rviz"/>
   <node if="$(arg use_rviz)" pkg="rviz" type="rviz" name="rviz" 
     args="-d $(arg rvizpath)" />
 

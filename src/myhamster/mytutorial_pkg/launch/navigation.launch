@@ -1,24 +1,28 @@
 <launch>
     <include file="$(find myhamster_simulation)/launch/hamster_v7.launch">
-        <arg name="rvizpath" value="$(find myhamster_simulation)/rviz/rviz_navigation.rviz"/>
+        <!--<arg name="rvizpath" value="$(find myhamster_simulation)/rviz/rviz_navigation.rviz"/>-->
     </include>
 
-    <arg name="map_file" default="$(find mytutorial_pkg)/map/map.yaml"/>
+    <!-- move_base -->
+    <include file="$(find mytutorial_pkg)/launch/move_base.launch">
+        <!--<arg name="local_planner" value="dwa"/>-->
+    </include>
 
-    <!-- Map server -->
-    <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+	<!-- Map server -->
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find mytutorial_pkg)/map/map.yaml" output="screen">
+        <param name="frame_id" value="map"/>
+	</node>
 
     <!-- AMCL -->
     <include file="$(find mytutorial_pkg)/launch/amcl.launch"/>
 
-    <!-- move_base -->
-    <include file="$(find mytutorial_pkg)/launch/move_base.launch">
-        <arg name="local_planner" value="dwa"/>
-    </include>
-
+    <!-- velocity conversion -->
     <param name="twist_cmd_topic" value="/cmd_vel"/>
     <param name="ackermann_cmd_topic" value="/ackermann_cmd"/>
-    <node pkg="teb_local_planner_tutorials" type="cmd_vel_to_ackermann_drive.py" name="velocity_convert_node"/>
+    <param name="wheelbase" value="0.165"/> <!--0.165-->
+    <node pkg="mytutorial_pkg" type="cmd_vel_to_ackermann_drive.py" name="velocity_convert_node"/>
 
+    <!-- rviz -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find myhamster_simulation)/rviz/rviz_navigation.rviz"/>
 
 </launch>
