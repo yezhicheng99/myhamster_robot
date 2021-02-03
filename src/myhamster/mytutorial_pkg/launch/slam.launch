@@ -2,7 +2,7 @@
     <include file="$(find myhamster_simulation)/launch/hamster_v7.launch">
         <arg name="use_rviz" value="true"/>
         <arg name="rvizpath" value="$(find myhamster_simulation)/rviz/rviz_slam.rviz"/>
-        <arg name="gazebo_world" value="$(find myhamster_simulation)/worlds/racecar_walker.world"/>
+        <arg name="gazebo_world" value="$(find myhamster_simulation)/worlds/turtlebot3_stage_4.world"/>
     </include>
 
     <include file="$(find mytutorial_pkg)/launch/gmapping.launch"/>
