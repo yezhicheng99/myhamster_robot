@@ -1,7 +1,8 @@
 <launch>
     <include file="$(find myhamster_simulation)/launch/hamster_v7.launch">
         <!--<arg name="rvizpath" value="$(find myhamster_simulation)/rviz/rviz_navigation.rviz"/>-->
-        <arg name="gazebo_world" value="$(find myhamster_simulation)/worlds/racecar_walker.world"/>
+        <arg name="x_pos" value="-0.5"/>
+        <arg name="gazebo_world" value="$(find myhamster_simulation)/worlds/turtlebot3_stage_4.world"/>
     </include>
 
     <!-- move_base -->
@@ -11,7 +12,7 @@
 
 
 	<!-- Map server -->
-	<node name="map_server" pkg="map_server" type="map_server" args="$(find mytutorial_pkg)/map/racecar_walker_map.yaml" output="screen">
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find mytutorial_pkg)/map/turtlebot3_stage_4.yaml" output="screen">
         <param name="frame_id" value="map"/>
 	</node>
 
